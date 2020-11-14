@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import math
 
+#四元数转旋转矩阵
 def quaternions2matrix(w, x, y, z):
     return np.array([
         [1-2*y*y-2*z*z, 2*x*y-2*z*w, 2*x*z+2*y*w], 
@@ -10,13 +11,14 @@ def quaternions2matrix(w, x, y, z):
 
 dataset = np.loadtxt('/home/dxt/Ultrasound/Data_Opt/sample_set.txt', dtype=np.float32)
 pi = 3.14158365352208978
-width_factor = 0.5
+width_factor = 0.5 #调节线宽
 a = plt.axes(projection='3d')
 x = np.linspace(-1, 1)
 y = (1-x**2)**0.5
 a.plot3D(x, y, 0, 'gray')
 a.plot3D(x, -y, 0, 'gray')
 
+#画平面的圆
 delta_range = np.arange(-1, 1 + 0.05, 0.05)*pi
 for delta in delta_range:
     z = math.sin(delta)
@@ -26,6 +28,7 @@ for delta in delta_range:
     a.plot3D(x, y, z, 'gray', linewidth = width_factor)
     a.plot3D(x, -y, z, 'gray', linewidth = width_factor)
 
+#画纵向的圆
 y = np.linspace(-1, 1)
 z = (1-x**2)**0.5
 x = np.zeros_like(y)
@@ -38,6 +41,7 @@ for belta in belta_range:
     a.plot3D(dots_[:,0], dots_[:,1], -dots_[:,2], 'gray', linewidth = width_factor)
 
 
+#画出数据
 dotset = np.empty(shape = (1,3))
 for loop in range(dataset.shape[0]):
     dot_to_draw = np.array([0, 0, 1])
